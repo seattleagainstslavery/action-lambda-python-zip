@@ -15,11 +15,17 @@ install_zip_dependencies(){
 
 publish_dependencies_as_layer(){
 	echo "Publishing dependencies as a layer..."
+  # echo $INPUT_PIP_LAYER_ARN
+  echo "a"
+  echo "${INPUT_LAMBDA_REGION}"
+  echo "b"
+  echo "$INPUT_LAMBDA_REGION"
+  echo "c"
   echo "${INPUT_PIP_LAYER_ARN}"
-	local result=$(aws lambda publish-layer-version --layer-name "${INPUT_PIP_LAYER_ARN}" --zip-file fileb://dependencies.zip)
-	LAYER_VERSION=$(jq '.Version' <<< "$result")
-	rm -rf python
-	rm dependencies.zip
+	# local result=$(aws lambda publish-layer-version --layer-name "${INPUT_PIP_LAYER_ARN}" --zip-file fileb://dependencies.zip)
+	# LAYER_VERSION=$(jq '.Version' <<< "$result")
+	# rm -rf python
+	# rm dependencies.zip
 }
 
 publish_custom_layers(){
@@ -53,11 +59,11 @@ update_functions_layers(){
 
 deploy_lambda_function(){
   configure_aws_credentials
-	install_zip_dependencies
+	# install_zip_dependencies
 	publish_dependencies_as_layer
-  publish_custom_layers
-	publish_functions
-	update_functions_layers
+ #  publish_custom_layers
+	# publish_functions
+	# update_functions_layers
 }
 
 deploy_lambda_function

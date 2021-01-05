@@ -6,19 +6,43 @@ inputs:
     description: the name/path to the requirements.txt file
     required: true
     default: 'requirements.txt'
-  lambda_layer_arn:
+  pip_layer_arn:
     description: The ARN for the Lambda layer the dependencies should be pushed to without the version (every push is a new version).
     required: true
-  lambda_function_name:
-    description: The Lambda function name. Check the AWS docs/readme for examples.
+  custom_layer_1_path:
+    description: the path to the code for custom layer 1
+  custom_layer_1_arn:
+    description: the ARN for custom layer 1
+  custom_layer_2_path:
+    description: the path to the code for custom layer 2
+  custom_layer_2_arn:
+    description: the ARN for custom layer 2
+  custom_layer_3_path:
+    description: the path to the code for custom layer 3
+  custom_layer_3_arn:
+    description: the ARN for custom layer 3
+  custom_layer_4_path:
+    description: the path to the code for custom layer 4
+  custom_layer_4_arn:
+    description: the ARN for custom layer 4
+  lambda_function_names:
+    description: The Lambda function names (comma-separated if you have multiple). Check the AWS docs/readme for examples.
     required: true
 runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
     - ${{ inputs.requirements_txt }}
-    - ${{ inputs.lambda_layer_arn }}
-    - ${{ inputs.lambda_function_name }}
+    - ${{ inputs.pip_layer_arn }}
+    - ${{ inputs.custom_layer_1_path }}
+    - ${{ inputs.custom_layer_1_arn }}
+    - ${{ inputs.custom_layer_2_path }}
+    - ${{ inputs.custom_layer_2_arn }}
+    - ${{ inputs.custom_layer_3_path }}
+    - ${{ inputs.custom_layer_3_arn }}
+    - ${{ inputs.custom_layer_4_path }}
+    - ${{ inputs.custom_layer_4_arn }}
+    - ${{ inputs.lambda_function_names }}
     - ${{ inputs.lambda_region }}
 branding:
   icon: 'cloud-lightning'

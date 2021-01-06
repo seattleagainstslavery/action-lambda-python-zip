@@ -43,15 +43,15 @@ publish_custom_layers(){
   CUSTOM_LAYER_4_VERSION=$(jq '.Version' <<< "$result")
 }
 
-publish_function(name){
-  echo "Deploying the code for ${name}"
-  zip -r "${name}".zip "${name}"
-  aws lambda update-function-code --function-name "${name}" --zip-file fileb://"${name}".zip
+publish_function(){
+  echo "Deploying the code for ${1}"
+  zip -r "${1}".zip "${1}"
+  aws lambda update-function-code --function-name "${1}" --zip-file fileb://"${1}".zip
 }
 
-update_function_layers(name){
-  echo "Adding pip layer and custom layers to ${name}"
-  aws lambda update-function-configuration --function-name "${name}" --layers "${INPUT_PIP_LAYER_ARN}:${PIP_LAYER_VERSION}" "${INPUT_CUSTOM_LAYER_1_ARN}:${CUSTOM_LAYER_1_VERSION}" "${INPUT_CUSTOM_LAYER_2_ARN}:${CUSTOM_LAYER_2_VERSION}" "${INPUT_CUSTOM_LAYER_3_ARN}:${CUSTOM_LAYER_3_VERSION}" "${INPUT_CUSTOM_LAYER_4_ARN}:${CUSTOM_LAYER_4_VERSION}"
+update_function_layers(){
+  echo "Adding pip layer and custom layers to ${1}"
+  aws lambda update-function-configuration --function-name "${1}" --layers "${INPUT_PIP_LAYER_ARN}:${PIP_LAYER_VERSION}" "${INPUT_CUSTOM_LAYER_1_ARN}:${CUSTOM_LAYER_1_VERSION}" "${INPUT_CUSTOM_LAYER_2_ARN}:${CUSTOM_LAYER_2_VERSION}" "${INPUT_CUSTOM_LAYER_3_ARN}:${CUSTOM_LAYER_3_VERSION}" "${INPUT_CUSTOM_LAYER_4_ARN}:${CUSTOM_LAYER_4_VERSION}"
 }
 
 deploy_lambda_function(){
@@ -62,8 +62,8 @@ deploy_lambda_function(){
 
   functionNames=(${INPUT_LAMBDA_FUNCTION_NAMES//,/ })
   for name in ${functionNames[@]}; do
-    publish_function(name)
-    update_function_layers(name)
+    publish_function name
+    update_function_layers name
   done
 }
 

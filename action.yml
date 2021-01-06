@@ -33,6 +33,7 @@ runs:
   image: 'Dockerfile'
   args:
     - ${{ inputs.requirements_txt }}
+    - ${{ inputs.lambda_function_names }}
     - ${{ inputs.pip_layer_arn }}
     - ${{ inputs.custom_layer_1_path }}
     - ${{ inputs.custom_layer_1_arn }}
@@ -42,8 +43,6 @@ runs:
     - ${{ inputs.custom_layer_3_arn }}
     - ${{ inputs.custom_layer_4_path }}
     - ${{ inputs.custom_layer_4_arn }}
-    - ${{ inputs.lambda_function_names }}
-    - ${{ inputs.lambda_region }}
 branding:
   icon: 'cloud-lightning'
   color: 'white'

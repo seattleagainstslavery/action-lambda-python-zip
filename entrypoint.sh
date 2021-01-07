@@ -34,7 +34,6 @@ publish_custom_layers(){
     ALL_LAYERS_ARN_VERSION+=" ${INPUT_CUSTOM_LAYER_1_ARN}:${CUSTOM_LAYER_1_VERSION}"
     rm -rf python
     rm custom_layer_1.zip
-    cd ..
   fi
 
   if [ -z ${INPUT_CUSTOM_LAYER_2_PATH} ]; then
@@ -49,7 +48,6 @@ publish_custom_layers(){
     ALL_LAYERS_ARN_VERSION+=" ${INPUT_CUSTOM_LAYER_2_ARN}:${CUSTOM_LAYER_2_VERSION}"
     rm -rf python
     rm custom_layer_2.zip
-    cd ..
   fi
 
   if [ -z ${INPUT_CUSTOM_LAYER_3_PATH} ]; then
@@ -64,7 +62,6 @@ publish_custom_layers(){
     ALL_LAYERS_ARN_VERSION+=" ${INPUT_CUSTOM_LAYER_3_ARN}:${CUSTOM_LAYER_3_VERSION}"
     rm -rf python
     rm custom_layer_3.zip
-    cd ..
   fi
 
   if [ -z ${INPUT_CUSTOM_LAYER_4_PATH} ]; then
@@ -79,7 +76,6 @@ publish_custom_layers(){
     ALL_LAYERS_ARN_VERSION+=" ${INPUT_CUSTOM_LAYER_4_ARN}:${CUSTOM_LAYER_4_VERSION}"
     rm -rf python
     rm custom_layer_4.zip
-    cd ..
   fi
 }
 

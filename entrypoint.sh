@@ -21,7 +21,9 @@ publish_pip_layer(){
 }
 
 publish_custom_layers(){
-  if test "${INPUT_CUSTOM_LAYER_1_PATH+x}"; then
+  if [ -z ${INPUT_CUSTOM_LAYER_1_PATH+x} ]; then
+    echo "custom_layer_1_path is not set"
+  else
     echo "Publishing custom layer 1"
     cd "${INPUT_CUSTOM_LAYER_1_PATH}"
     zip -r custom_layer_1.zip .
@@ -32,8 +34,11 @@ publish_custom_layers(){
     cd ..
   fi
 
-  if test "${INPUT_CUSTOM_LAYER_2_PATH+x}"; then
+  if [ -z ${INPUT_CUSTOM_LAYER_2_PATH+x} ]; then
+    echo "custom_layer_2_path is not set"
+  else
     echo "Publishing custom layer 2"
+    echo "${INPUT_CUSTOM_LAYER_2_PATH}"
     cd "${INPUT_CUSTOM_LAYER_2_PATH}"
     zip -r custom_layer_2.zip .
     local result=$(aws lambda publish-layer-version --layer-name "${INPUT_CUSTOM_LAYER_2_ARN}" --zip-file fileb://custom_layer_2.zip)
@@ -43,7 +48,9 @@ publish_custom_layers(){
     cd ..
   fi
 
-  if test "${INPUT_CUSTOM_LAYER_3_PATH+x}"; then
+  if [ -z ${INPUT_CUSTOM_LAYER_3_PATH+x} ]; then
+    echo "custom_layer_3_path is not set"
+  else
     echo "Publishing custom layer 3"
     cd "${INPUT_CUSTOM_LAYER_3_PATH}"
     zip -r custom_layer_3.zip .
@@ -54,7 +61,9 @@ publish_custom_layers(){
     cd ..
   fi
 
-  if [ -n "${INPUT_CUSTOM_LAYER_4_PATH+set}" ]; then
+  if [ -z ${INPUT_CUSTOM_LAYER_4_PATH+x} ]; then
+    echo "custom_layer_4_path is not set"
+  else
     echo "Publishing custom layer 4"
     cd "${INPUT_CUSTOM_LAYER_4_PATH}"
     zip -r custom_layer_4.zip .

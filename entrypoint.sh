@@ -15,37 +15,41 @@ publish_pip_layer(){
   echo "Publishing dependencies as a layer..."
   local result=$(aws lambda publish-layer-version --layer-name "${INPUT_PIP_LAYER_ARN}" --zip-file fileb://dependencies.zip)
   PIP_LAYER_VERSION=$(jq '.Version' <<< "$result")
+  PIP_ARN_VERSION="${INPUT_PIP_LAYER_ARN}:${PIP_LAYER_VERSION}"
   rm -rf python
   rm dependencies.zip
 }
 
 publish_custom_layers(){
-  if [ -n "${INPUT_CUSTOM_LAYER_1_PATH+set}" ]; then
+  if test "${INPUT_CUSTOM_LAYER_1_PATH+x}"; then
     echo "Publishing custom layer 1"
     cd "${INPUT_CUSTOM_LAYER_1_PATH}"
     zip -r custom_layer_1.zip .
     local result=$(aws lambda publish-layer-version --layer-name "${INPUT_CUSTOM_LAYER_1_ARN}" --zip-file fileb://custom_layer_1.zip)
     CUSTOM_LAYER_1_VERSION=$(jq '.Version' <<< "$result")
+    CUSTOM_LAYER_1_ARN_VERSION="${INPUT_CUSTOM_LAYER_1_ARN}:${CUSTOM_LAYER_1_VERSION}"
     rm custom_layer_1.zip
     cd ..
   fi
 
-  if [ -n "${INPUT_CUSTOM_LAYER_2_PATH+set}" ]; then
+  if test "${INPUT_CUSTOM_LAYER_2_PATH+x}"; then
     echo "Publishing custom layer 2"
     cd "${INPUT_CUSTOM_LAYER_2_PATH}"
     zip -r custom_layer_2.zip .
     local result=$(aws lambda publish-layer-version --layer-name "${INPUT_CUSTOM_LAYER_2_ARN}" --zip-file fileb://custom_layer_2.zip)
     CUSTOM_LAYER_2_VERSION=$(jq '.Version' <<< "$result")
+    CUSTOM_LAYER_2_ARN_VERSION="${INPUT_CUSTOM_LAYER_2_ARN}:${CUSTOM_LAYER_2_VERSION}"
     rm custom_layer_2.zip
     cd ..
   fi
 
-  if [ -n "${INPUT_CUSTOM_LAYER_3_PATH+set}" ]; then
+  if test "${INPUT_CUSTOM_LAYER_3_PATH+x}"; then
     echo "Publishing custom layer 3"
     cd "${INPUT_CUSTOM_LAYER_3_PATH}"
     zip -r custom_layer_3.zip .
     local result=$(aws lambda publish-layer-version --layer-name "${INPUT_CUSTOM_LAYER_3_ARN}" --zip-file fileb://custom_layer_3.zip)
     CUSTOM_LAYER_3_VERSION=$(jq '.Version' <<< "$result")
+    CUSTOM_LAYER_3_ARN_VERSION="${INPUT_CUSTOM_LAYER_3_ARN}:${CUSTOM_LAYER_3_VERSION}"
     rm custom_layer_3.zip
     cd ..
   fi
@@ -56,6 +60,7 @@ publish_custom_layers(){
     zip -r custom_layer_4.zip .
     local result=$(aws lambda publish-layer-version --layer-name "${INPUT_CUSTOM_LAYER_4_ARN}" --zip-file fileb://custom_layer_4.zip)
     CUSTOM_LAYER_4_VERSION=$(jq '.Version' <<< "$result")
+    CUSTOM_LAYER_4_ARN_VERSION="${INPUT_CUSTOM_LAYER_4_ARN}:${CUSTOM_LAYER_4_VERSION}"
     rm custom_layer_4.zip
     cd ..
   fi
@@ -72,7 +77,7 @@ publish_function(){
 
 update_function_layers(){
   echo "Adding pip layer and custom layers to ${1}"
-  aws lambda update-function-configuration --function-name "${1}" --layers "${INPUT_PIP_LAYER_ARN}:${PIP_LAYER_VERSION}" "${INPUT_CUSTOM_LAYER_1_ARN}:${CUSTOM_LAYER_1_VERSION}" "${INPUT_CUSTOM_LAYER_2_ARN}:${CUSTOM_LAYER_2_VERSION}" "${INPUT_CUSTOM_LAYER_3_ARN}:${CUSTOM_LAYER_3_VERSION}" "${INPUT_CUSTOM_LAYER_4_ARN}:${CUSTOM_LAYER_4_VERSION}"
+  aws lambda update-function-configuration --function-name "${1}" --layers "${PIP_ARN_VERSION}" "${CUSTOM_LAYER_1_ARN_VERSION}" "${CUSTOM_LAYER_2_ARN_VERSION}" "${CUSTOM_LAYER_3_ARN_VERSION}" "${CUSTOM_LAYER_4_ARN_VERSION}"
 }
 
 deploy_lambda_function(){

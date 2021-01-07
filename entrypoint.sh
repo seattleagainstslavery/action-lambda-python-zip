@@ -78,7 +78,7 @@ update_function_layers(){
 deploy_lambda_function(){
   configure_aws_credentials
   publish_pip_layer
-  # publish_custom_layers
+  publish_custom_layers
 
   # functionNames=(${INPUT_LAMBDA_FUNCTION_NAMES//,/ })
   # for name in ${functionNames[@]}; do

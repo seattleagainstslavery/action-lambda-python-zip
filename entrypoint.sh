@@ -7,14 +7,11 @@ configure_aws_credentials(){
   echo "REGION SET AS: ${INPUT_AWS_REGION}"
 }
 
-install_zip_dependencies(){
+publish_pip_layer(){
   echo "Installing and zipping dependencies..."
   mkdir python
   pip install --target=python -r "${INPUT_REQUIREMENTS_TXT}"
   zip -r dependencies.zip ./python
-}
-
-publish_dependencies_as_layer(){
   echo "Publishing dependencies as a layer..."
   local result=$(aws lambda publish-layer-version --layer-name "${INPUT_PIP_LAYER_ARN}" --zip-file fileb://dependencies.zip)
   PIP_LAYER_VERSION=$(jq '.Version' <<< "$result")
@@ -80,15 +77,14 @@ update_function_layers(){
 
 deploy_lambda_function(){
   configure_aws_credentials
-  install_zip_dependencies
-  publish_dependencies_as_layer
-  publish_custom_layers
+  publish_pip_layer
+  # publish_custom_layers
 
-  functionNames=(${INPUT_LAMBDA_FUNCTION_NAMES//,/ })
-  for name in ${functionNames[@]}; do
-    publish_function $name
-    update_function_layers $name
-  done
+  # functionNames=(${INPUT_LAMBDA_FUNCTION_NAMES//,/ })
+  # for name in ${functionNames[@]}; do
+  #   publish_function $name
+  #   update_function_layers $name
+  # done
 }
 
 deploy_lambda_function

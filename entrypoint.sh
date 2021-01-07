@@ -22,40 +22,53 @@ publish_dependencies_as_layer(){
 }
 
 publish_custom_layers(){
-  echo "Publishing custom layer 1"
-  cd "${INPUT_CUSTOM_LAYER_1_PATH}"
-  zip -r custom_layer_1.zip .
-  local result=$(aws lambda publish-layer-version --layer-name "${INPUT_CUSTOM_LAYER_1_ARN}" --zip-file fileb://custom_layer_1.zip)
-  CUSTOM_LAYER_1_VERSION=$(jq '.Version' <<< "$result")
-  cd ..
+  if [ -n "${INPUT_CUSTOM_LAYER_1_PATH+set}" ]; then
+    echo "Publishing custom layer 1"
+    cd "${INPUT_CUSTOM_LAYER_1_PATH}"
+    zip -r custom_layer_1.zip .
+    local result=$(aws lambda publish-layer-version --layer-name "${INPUT_CUSTOM_LAYER_1_ARN}" --zip-file fileb://custom_layer_1.zip)
+    CUSTOM_LAYER_1_VERSION=$(jq '.Version' <<< "$result")
+    rm custom_layer_1.zip
+    cd ..
+  fi
 
-  echo "Publishing custom layer 2"
-  cd "${INPUT_CUSTOM_LAYER_2_PATH}"
-  zip -r custom_layer_2.zip .
-  local result=$(aws lambda publish-layer-version --layer-name "${INPUT_CUSTOM_LAYER_2_ARN}" --zip-file fileb://custom_layer_2.zip)
-  CUSTOM_LAYER_2_VERSION=$(jq '.Version' <<< "$result")
-  cd ..
+  if [ -n "${INPUT_CUSTOM_LAYER_2_PATH+set}" ]; then
+    echo "Publishing custom layer 2"
+    cd "${INPUT_CUSTOM_LAYER_2_PATH}"
+    zip -r custom_layer_2.zip .
+    local result=$(aws lambda publish-layer-version --layer-name "${INPUT_CUSTOM_LAYER_2_ARN}" --zip-file fileb://custom_layer_2.zip)
+    CUSTOM_LAYER_2_VERSION=$(jq '.Version' <<< "$result")
+    rm custom_layer_2.zip
+    cd ..
+  fi
 
-  echo "Publishing custom layer 3"
-  cd "${INPUT_CUSTOM_LAYER_3_PATH}"
-  zip -r custom_layer_3.zip .
-  local result=$(aws lambda publish-layer-version --layer-name "${INPUT_CUSTOM_LAYER_3_ARN}" --zip-file fileb://custom_layer_3.zip)
-  CUSTOM_LAYER_3_VERSION=$(jq '.Version' <<< "$result")
-  cd ..
+  if [ -n "${INPUT_CUSTOM_LAYER_3_PATH+set}" ]; then
+    echo "Publishing custom layer 3"
+    cd "${INPUT_CUSTOM_LAYER_3_PATH}"
+    zip -r custom_layer_3.zip .
+    local result=$(aws lambda publish-layer-version --layer-name "${INPUT_CUSTOM_LAYER_3_ARN}" --zip-file fileb://custom_layer_3.zip)
+    CUSTOM_LAYER_3_VERSION=$(jq '.Version' <<< "$result")
+    rm custom_layer_3.zip
+    cd ..
+  fi
 
-  echo "Publishing custom layer 4"
-  cd "${INPUT_CUSTOM_LAYER_4_PATH}"
-  zip -r custom_layer_4.zip .
-  local result=$(aws lambda publish-layer-version --layer-name "${INPUT_CUSTOM_LAYER_4_ARN}" --zip-file fileb://custom_layer_4.zip)
-  CUSTOM_LAYER_4_VERSION=$(jq '.Version' <<< "$result")
-  cd ..
+  if [ -n "${INPUT_CUSTOM_LAYER_4_PATH+set}" ]; then
+    echo "Publishing custom layer 4"
+    cd "${INPUT_CUSTOM_LAYER_4_PATH}"
+    zip -r custom_layer_4.zip .
+    local result=$(aws lambda publish-layer-version --layer-name "${INPUT_CUSTOM_LAYER_4_ARN}" --zip-file fileb://custom_layer_4.zip)
+    CUSTOM_LAYER_4_VERSION=$(jq '.Version' <<< "$result")
+    rm custom_layer_4.zip
+    cd ..
+  fi
 }
 
 publish_function(){
   echo "Deploying the code for ${1}"
   cd "${1}"
-  zip -r "${1}".zip .
-  aws lambda update-function-code --function-name "${1}" --zip-file fileb://"${1}".zip
+  zip -r code.zip .
+  aws lambda update-function-code --function-name "${1}" --zip-file fileb://code.zip
+  rm code.zip
   cd ..
 }
 

@@ -87,8 +87,8 @@ publish_function(){
 
 update_function_layers(){
   echo "Adding pip layer and custom layers to ${1}"
-  echo "${ALL_LAYERS_ARN_VERSION[@]}"
-  aws lambda update-function-configuration --function-name "${1}" --layers "${ALL_LAYERS_ARN_VERSION[@]}"
+  echo ${ALL_LAYERS_ARN_VERSION[@]}
+  aws lambda update-function-configuration --function-name "${1}" --layers ${ALL_LAYERS_ARN_VERSION[@]}
 }
 
 deploy_lambda_function(){

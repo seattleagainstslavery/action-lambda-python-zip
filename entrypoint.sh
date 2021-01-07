@@ -26,11 +26,13 @@ publish_custom_layers(){
     echo "custom_layer_1_path is not set"
   else
     echo "Publishing custom layer 1"
-    cd "${INPUT_CUSTOM_LAYER_1_PATH}"
-    zip -r custom_layer_1.zip .
+    mkdir python
+    cp -r ${INPUT_CUSTOM_LAYER_1_PATH} python
+    zip -r custom_layer_1.zip ./python
     local result=$(aws lambda publish-layer-version --layer-name "${INPUT_CUSTOM_LAYER_1_ARN}" --zip-file fileb://custom_layer_1.zip)
     CUSTOM_LAYER_1_VERSION=$(jq '.Version' <<< "$result")
     ALL_LAYERS_ARN_VERSION+=" ${INPUT_CUSTOM_LAYER_1_ARN}:${CUSTOM_LAYER_1_VERSION}"
+    rm -rf python
     rm custom_layer_1.zip
     cd ..
   fi
@@ -39,12 +41,13 @@ publish_custom_layers(){
     echo "custom_layer_2_path is not set"
   else
     echo "Publishing custom layer 2"
-    echo "${INPUT_CUSTOM_LAYER_2_PATH}"
-    cd "${INPUT_CUSTOM_LAYER_2_PATH}"
-    zip -r custom_layer_2.zip .
+    mkdir python
+    cp -r ${INPUT_CUSTOM_LAYER_2_PATH} python
+    zip -r custom_layer_2.zip ./python
     local result=$(aws lambda publish-layer-version --layer-name "${INPUT_CUSTOM_LAYER_2_ARN}" --zip-file fileb://custom_layer_2.zip)
     CUSTOM_LAYER_2_VERSION=$(jq '.Version' <<< "$result")
     ALL_LAYERS_ARN_VERSION+=" ${INPUT_CUSTOM_LAYER_2_ARN}:${CUSTOM_LAYER_2_VERSION}"
+    rm -rf python
     rm custom_layer_2.zip
     cd ..
   fi
@@ -53,11 +56,13 @@ publish_custom_layers(){
     echo "custom_layer_3_path is not set"
   else
     echo "Publishing custom layer 3"
-    cd "${INPUT_CUSTOM_LAYER_3_PATH}"
-    zip -r custom_layer_3.zip .
+    mkdir python
+    cp -r ${INPUT_CUSTOM_LAYER_3_PATH} python
+    zip -r custom_layer_3.zip ./python
     local result=$(aws lambda publish-layer-version --layer-name "${INPUT_CUSTOM_LAYER_3_ARN}" --zip-file fileb://custom_layer_3.zip)
     CUSTOM_LAYER_3_VERSION=$(jq '.Version' <<< "$result")
     ALL_LAYERS_ARN_VERSION+=" ${INPUT_CUSTOM_LAYER_3_ARN}:${CUSTOM_LAYER_3_VERSION}"
+    rm -rf python
     rm custom_layer_3.zip
     cd ..
   fi
@@ -66,11 +71,13 @@ publish_custom_layers(){
     echo "custom_layer_4_path is not set"
   else
     echo "Publishing custom layer 4"
-    cd "${INPUT_CUSTOM_LAYER_4_PATH}"
-    zip -r custom_layer_4.zip .
+    mkdir python
+    cp -r ${INPUT_CUSTOM_LAYER_4_PATH} python
+    zip -r custom_layer_4.zip ./python
     local result=$(aws lambda publish-layer-version --layer-name "${INPUT_CUSTOM_LAYER_4_ARN}" --zip-file fileb://custom_layer_4.zip)
     CUSTOM_LAYER_4_VERSION=$(jq '.Version' <<< "$result")
     ALL_LAYERS_ARN_VERSION+=" ${INPUT_CUSTOM_LAYER_4_ARN}:${CUSTOM_LAYER_4_VERSION}"
+    rm -rf python
     rm custom_layer_4.zip
     cd ..
   fi

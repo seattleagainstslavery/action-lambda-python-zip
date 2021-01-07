@@ -62,8 +62,8 @@ deploy_lambda_function(){
 
   functionNames=(${INPUT_LAMBDA_FUNCTION_NAMES//,/ })
   for name in ${functionNames[@]}; do
-    publish_function name
-    update_function_layers name
+    publish_function $name
+    update_function_layers $name
   done
 }
 

@@ -94,11 +94,11 @@ deploy_lambda_function(){
   publish_pip_layer
   publish_custom_layers
 
-  # functionNames=(${INPUT_LAMBDA_FUNCTION_NAMES//,/ })
-  # for name in ${functionNames[@]}; do
-  #   publish_function $name
-  #   update_function_layers $name
-  # done
+  functionNames=(${INPUT_LAMBDA_FUNCTION_NAMES//,/ })
+  for name in ${functionNames[@]}; do
+    publish_function $name
+    update_function_layers $name
+  done
 }
 
 deploy_lambda_function

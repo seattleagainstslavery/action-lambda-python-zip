@@ -3,7 +3,9 @@
 configure_aws_credentials(){
   aws configure set aws_access_key_id "${INPUT_AWS_ACCESS_KEY_ID}"
   aws configure set aws_secret_access_key "${INPUT_AWS_SECRET_ACCESS_KEY}"
-  aws configure set default.region "${INPUT_AWS_REGION}"
+  export AWS_DEFAULT_REGION="${INPUT_AWS_REGION}"
+  # aws configure set default.region us-east-2
+  # aws configure set default.region "${INPUT_AWS_REGION}"
 }
 
 install_zip_dependencies(){

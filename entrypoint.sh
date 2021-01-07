@@ -21,7 +21,7 @@ publish_pip_layer(){
 }
 
 publish_custom_layers(){
-  if [ -z ${INPUT_CUSTOM_LAYER_1_PATH+x} ]; then
+  if [ -z ${INPUT_CUSTOM_LAYER_1_PATH} ]; then
     echo "custom_layer_1_path is not set"
   else
     echo "Publishing custom layer 1"
@@ -34,7 +34,7 @@ publish_custom_layers(){
     cd ..
   fi
 
-  if [ -z ${INPUT_CUSTOM_LAYER_2_PATH+x} ]; then
+  if [ -z ${INPUT_CUSTOM_LAYER_2_PATH} ]; then
     echo "custom_layer_2_path is not set"
   else
     echo "Publishing custom layer 2"
@@ -48,7 +48,7 @@ publish_custom_layers(){
     cd ..
   fi
 
-  if [ -z ${INPUT_CUSTOM_LAYER_3_PATH+x} ]; then
+  if [ -z ${INPUT_CUSTOM_LAYER_3_PATH} ]; then
     echo "custom_layer_3_path is not set"
   else
     echo "Publishing custom layer 3"
@@ -61,7 +61,7 @@ publish_custom_layers(){
     cd ..
   fi
 
-  if [ -z ${INPUT_CUSTOM_LAYER_4_PATH+x} ]; then
+  if [ -z ${INPUT_CUSTOM_LAYER_4_PATH} ]; then
     echo "custom_layer_4_path is not set"
   else
     echo "Publishing custom layer 4"

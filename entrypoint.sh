@@ -30,7 +30,7 @@ publish_custom_layers(){
     zip -r custom_layer_1.zip .
     local result=$(aws lambda publish-layer-version --layer-name "${INPUT_CUSTOM_LAYER_1_ARN}" --zip-file fileb://custom_layer_1.zip)
     CUSTOM_LAYER_1_VERSION=$(jq '.Version' <<< "$result")
-    ALL_LAYERS_ARN_VERSION+="${INPUT_CUSTOM_LAYER_1_ARN}:${CUSTOM_LAYER_1_VERSION}"
+    ALL_LAYERS_ARN_VERSION+=" ${INPUT_CUSTOM_LAYER_1_ARN}:${CUSTOM_LAYER_1_VERSION}"
     rm custom_layer_1.zip
     cd ..
   fi
@@ -44,7 +44,7 @@ publish_custom_layers(){
     zip -r custom_layer_2.zip .
     local result=$(aws lambda publish-layer-version --layer-name "${INPUT_CUSTOM_LAYER_2_ARN}" --zip-file fileb://custom_layer_2.zip)
     CUSTOM_LAYER_2_VERSION=$(jq '.Version' <<< "$result")
-    ALL_LAYERS_ARN_VERSION+="${INPUT_CUSTOM_LAYER_2_ARN}:${CUSTOM_LAYER_2_VERSION}"
+    ALL_LAYERS_ARN_VERSION+=" ${INPUT_CUSTOM_LAYER_2_ARN}:${CUSTOM_LAYER_2_VERSION}"
     rm custom_layer_2.zip
     cd ..
   fi
@@ -57,7 +57,7 @@ publish_custom_layers(){
     zip -r custom_layer_3.zip .
     local result=$(aws lambda publish-layer-version --layer-name "${INPUT_CUSTOM_LAYER_3_ARN}" --zip-file fileb://custom_layer_3.zip)
     CUSTOM_LAYER_3_VERSION=$(jq '.Version' <<< "$result")
-    ALL_LAYERS_ARN_VERSION+="${INPUT_CUSTOM_LAYER_3_ARN}:${CUSTOM_LAYER_3_VERSION}"
+    ALL_LAYERS_ARN_VERSION+=" ${INPUT_CUSTOM_LAYER_3_ARN}:${CUSTOM_LAYER_3_VERSION}"
     rm custom_layer_3.zip
     cd ..
   fi
@@ -70,7 +70,7 @@ publish_custom_layers(){
     zip -r custom_layer_4.zip .
     local result=$(aws lambda publish-layer-version --layer-name "${INPUT_CUSTOM_LAYER_4_ARN}" --zip-file fileb://custom_layer_4.zip)
     CUSTOM_LAYER_4_VERSION=$(jq '.Version' <<< "$result")
-    ALL_LAYERS_ARN_VERSION+="${INPUT_CUSTOM_LAYER_4_ARN}:${CUSTOM_LAYER_4_VERSION}"
+    ALL_LAYERS_ARN_VERSION+=" ${INPUT_CUSTOM_LAYER_4_ARN}:${CUSTOM_LAYER_4_VERSION}"
     rm custom_layer_4.zip
     cd ..
   fi

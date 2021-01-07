@@ -74,19 +74,20 @@ publish_function(){
 
 update_function_layers(){
   echo "Adding pip layer and custom layers to ${1}"
-  aws lambda update-function-configuration --function-name "${1}" --layers "${INPUT_PIP_LAYER_ARN}:${PIP_LAYER_VERSION}" "${INPUT_CUSTOM_LAYER_1_ARN}:${CUSTOM_LAYER_1_VERSION}" "${INPUT_CUSTOM_LAYER_2_ARN}:${CUSTOM_LAYER_2_VERSION}" "${INPUT_CUSTOM_LAYER_3_ARN}:${CUSTOM_LAYER_3_VERSION}" "${INPUT_CUSTOM_LAYER_4_ARN}:${CUSTOM_LAYER_4_VERSION}"
+  aws lambda update-function-configuration --function-name "${1}" --layers "${INPUT_PIP_LAYER_ARN}:${PIP_LAYER_VERSION}"
+  # aws lambda update-function-configuration --function-name "${1}" --layers "${INPUT_PIP_LAYER_ARN}:${PIP_LAYER_VERSION}" "${INPUT_CUSTOM_LAYER_1_ARN}:${CUSTOM_LAYER_1_VERSION}" "${INPUT_CUSTOM_LAYER_2_ARN}:${CUSTOM_LAYER_2_VERSION}" "${INPUT_CUSTOM_LAYER_3_ARN}:${CUSTOM_LAYER_3_VERSION}" "${INPUT_CUSTOM_LAYER_4_ARN}:${CUSTOM_LAYER_4_VERSION}"
 }
 
 deploy_lambda_function(){
   configure_aws_credentials
-  install_zip_dependencies
-  publish_dependencies_as_layer
-  publish_custom_layers
+  # install_zip_dependencies
+  # publish_dependencies_as_layer
+  # publish_custom_layers
 
   functionNames=(${INPUT_LAMBDA_FUNCTION_NAMES//,/ })
   for name in ${functionNames[@]}; do
     publish_function $name
-    update_function_layers $name
+    # update_function_layers $name
   done
 }
 

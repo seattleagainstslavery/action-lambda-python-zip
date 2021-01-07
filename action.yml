@@ -2,6 +2,9 @@ name: AWS Lambda Zip Deploy - Python
 author: Qubitro
 description: Zip deploy to AWS Lambda with requirements in a separate layer.
 inputs:
+  aws_region:
+    description: the AWS region where your lambdas are located
+    required: true
   requirements_txt:
     description: the name/path to the requirements.txt file
     required: true
@@ -32,6 +35,7 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
+    - ${{ inputs.aws_region }}
     - ${{ inputs.requirements_txt }}
     - ${{ inputs.lambda_function_names }}
     - ${{ inputs.pip_layer_arn }}

@@ -17,6 +17,8 @@ This example workflow assumes your `requirements.txt` is in the root directory a
 
 The below workflow would publish code to layers (pip and any custom layers) and functions (first_function and second_function), and finally also attach the layers to those updated functions.
 
+For any custom layers, before the files are copied and zipped and uploaded to AWS, any custom script can be executed if it is placed inside the layer folder and named `predeploy.sh`
+
 
 ### Environment variables
 Storing credentials as a Github secret is strongly recommended.

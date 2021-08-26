@@ -27,6 +27,13 @@ publish_custom_layers(){
   else
     echo "Publishing custom layer 1"
     mkdir python
+    INIT_FILE=$INPUT_CUSTOM_LAYER_1_PATH/predeploy.sh
+    if [ -f "$INIT_FILE" ]; then
+        echo "$INIT_FILE exists."
+        cd $INPUT_CUSTOM_LAYER_1_PATH
+        ./predeploy.sh
+        cd ..
+    fi
     cp -r ${INPUT_CUSTOM_LAYER_1_PATH} python
     zip -r custom_layer_1.zip ./python
     local result=$(aws lambda publish-layer-version --layer-name "${INPUT_CUSTOM_LAYER_1_ARN}" --zip-file fileb://custom_layer_1.zip)
@@ -41,6 +48,13 @@ publish_custom_layers(){
   else
     echo "Publishing custom layer 2"
     mkdir python
+    INIT_FILE=$INPUT_CUSTOM_LAYER_2_PATH/predeploy.sh
+    if [ -f "$INIT_FILE" ]; then
+        echo "$INIT_FILE exists."
+        cd $INPUT_CUSTOM_LAYER_2_PATH
+        ./predeploy.sh
+        cd ..
+    fi
     cp -r ${INPUT_CUSTOM_LAYER_2_PATH} python
     zip -r custom_layer_2.zip ./python
     local result=$(aws lambda publish-layer-version --layer-name "${INPUT_CUSTOM_LAYER_2_ARN}" --zip-file fileb://custom_layer_2.zip)
@@ -55,6 +69,13 @@ publish_custom_layers(){
   else
     echo "Publishing custom layer 3"
     mkdir python
+    INIT_FILE=$INPUT_CUSTOM_LAYER_3_PATH/predeploy.sh
+    if [ -f "$INIT_FILE" ]; then
+        echo "$INIT_FILE exists."
+        cd $INPUT_CUSTOM_LAYER_3_PATH
+        ./predeploy.sh
+        cd ..
+    fi
     cp -r ${INPUT_CUSTOM_LAYER_3_PATH} python
     zip -r custom_layer_3.zip ./python
     local result=$(aws lambda publish-layer-version --layer-name "${INPUT_CUSTOM_LAYER_3_ARN}" --zip-file fileb://custom_layer_3.zip)
@@ -69,6 +90,13 @@ publish_custom_layers(){
   else
     echo "Publishing custom layer 4"
     mkdir python
+    INIT_FILE=$INPUT_CUSTOM_LAYER_4_PATH/predeploy.sh
+    if [ -f "$INIT_FILE" ]; then
+        echo "$INIT_FILE exists."
+        cd $INPUT_CUSTOM_LAYER_4_PATH
+        ./predeploy.sh
+        cd ..
+    fi
     cp -r ${INPUT_CUSTOM_LAYER_4_PATH} python
     zip -r custom_layer_4.zip ./python
     local result=$(aws lambda publish-layer-version --layer-name "${INPUT_CUSTOM_LAYER_4_ARN}" --zip-file fileb://custom_layer_4.zip)

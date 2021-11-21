@@ -41,6 +41,7 @@ publish_custom_layers(){
     ALL_LAYERS_ARN_VERSION+=" ${INPUT_CUSTOM_LAYER_1_ARN}:${CUSTOM_LAYER_1_VERSION}"
     rm -rf python
     rm custom_layer_1.zip
+    rm -rf ${INPUT_CUSTOM_LAYER_1_PATH}
   fi
 
   if [ -z ${INPUT_CUSTOM_LAYER_2_PATH} ]; then

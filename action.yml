@@ -28,6 +28,8 @@ inputs:
     description: the path to the code for custom layer 4
   custom_layer_4_arn:
     description: the ARN for custom layer 4
+  public_layer_1_arn:
+    description: the ARN for public layer 4
   lambda_function_names:
     description: The Lambda function names (comma-separated if you have multiple). Check the AWS docs/readme for examples.
     required: true
@@ -47,6 +49,7 @@ runs:
     - ${{ inputs.custom_layer_3_arn }}
     - ${{ inputs.custom_layer_4_path }}
     - ${{ inputs.custom_layer_4_arn }}
+    - ${{ inputs.public_layer_1_arn }}
 branding:
   icon: 'cloud-lightning'
   color: 'white'

@@ -107,6 +107,15 @@ publish_custom_layers(){
   fi
 }
 
+publish_public_layers(){
+  if [ -z ${INPUT_PUBLIC_LAYER_1_ARN} ]; then
+    echo "public_layer_1_arn is not set"
+  else
+    echo "Publishing public layer 1"
+    ALL_LAYERS_ARN_VERSION+=" ${INPUT_PUBLIC_LAYER_1_ARN}"
+  fi
+}
+
 publish_function(){
   echo "Deploying the code for ${1}"
   cd "${1}"
@@ -126,6 +135,7 @@ deploy_lambda_function(){
   configure_aws_credentials
   publish_pip_layer
   publish_custom_layers
+  publish_public_layers
 
   functionNames=(${INPUT_LAMBDA_FUNCTION_NAMES//,/ })
   for name in ${functionNames[@]}; do

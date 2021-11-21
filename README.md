@@ -47,6 +47,14 @@ Storing credentials as a Github secret is strongly recommended.
     Same as above if you need more layers.
 - `custom_layer_4_arn`
     Same as above if you need more layers.
+- `public_layer_1_arn`
+    The ARN of an external public Lambda layer in case you need one (e.g. https://github.com/keithrozario/Klayers).
+- `public_layer_2_arn`
+    Same as above if you need more layers.
+- `public_layer_3_arn`
+    Same as above if you need more layers.
+- `public_layer_4_arn`
+    Same as above if you need more layers.
 - `lambda_function_names`
     The Lambda function names comma separated.
 - `aws_region`

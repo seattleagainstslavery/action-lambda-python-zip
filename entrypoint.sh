@@ -41,6 +41,7 @@ publish_custom_layers(){
     ALL_LAYERS_ARN_VERSION+=" ${INPUT_CUSTOM_LAYER_1_ARN}:${CUSTOM_LAYER_1_VERSION}"
     rm -rf python
     rm custom_layer_1.zip
+    rm -rf ${INPUT_CUSTOM_LAYER_1_PATH}
   fi
 
   if [ -z ${INPUT_CUSTOM_LAYER_2_PATH} ]; then
@@ -62,6 +63,7 @@ publish_custom_layers(){
     ALL_LAYERS_ARN_VERSION+=" ${INPUT_CUSTOM_LAYER_2_ARN}:${CUSTOM_LAYER_2_VERSION}"
     rm -rf python
     rm custom_layer_2.zip
+    rm -rf ${INPUT_CUSTOM_LAYER_2_PATH}
   fi
 
   if [ -z ${INPUT_CUSTOM_LAYER_3_PATH} ]; then
@@ -83,6 +85,7 @@ publish_custom_layers(){
     ALL_LAYERS_ARN_VERSION+=" ${INPUT_CUSTOM_LAYER_3_ARN}:${CUSTOM_LAYER_3_VERSION}"
     rm -rf python
     rm custom_layer_3.zip
+    rm -rf ${INPUT_CUSTOM_LAYER_3_PATH}
   fi
 
   if [ -z ${INPUT_CUSTOM_LAYER_4_PATH} ]; then
@@ -104,17 +107,48 @@ publish_custom_layers(){
     ALL_LAYERS_ARN_VERSION+=" ${INPUT_CUSTOM_LAYER_4_ARN}:${CUSTOM_LAYER_4_VERSION}"
     rm -rf python
     rm custom_layer_4.zip
+    rm -rf ${INPUT_CUSTOM_LAYER_4_PATH}
   fi
 }
 
-publish_function(){
-  echo "Deploying the code for ${1}"
-  cd "${1}"
-  zip -r code.zip .
-  aws lambda update-function-code --function-name "${1}" --zip-file fileb://code.zip
-  rm code.zip
-  cd ..
+publish_public_layers(){
+  if [ -z ${INPUT_PUBLIC_LAYER_1_ARN} ]; then
+    echo "public_layer_1_arn is not set"
+  else
+    echo "Publishing public layer 1"
+    ALL_LAYERS_ARN_VERSION+=" ${INPUT_PUBLIC_LAYER_1_ARN}"
+  fi
+
+  if [ -z ${INPUT_PUBLIC_LAYER_2_ARN} ]; then
+    echo "public_layer_1_arn is not set"
+  else
+    echo "Publishing public layer 1"
+    ALL_LAYERS_ARN_VERSION+=" ${INPUT_PUBLIC_LAYER_2_ARN}"
+  fi
+
+  if [ -z ${INPUT_PUBLIC_LAYER_3_ARN} ]; then
+    echo "public_layer_1_arn is not set"
+  else
+    echo "Publishing public layer 1"
+    ALL_LAYERS_ARN_VERSION+=" ${INPUT_PUBLIC_LAYER_3_ARN}"
+  fi
+
+  if [ -z ${INPUT_PUBLIC_LAYER_4_ARN} ]; then
+    echo "public_layer_1_arn is not set"
+  else
+    echo "Publishing public layer 1"
+    ALL_LAYERS_ARN_VERSION+=" ${INPUT_PUBLIC_LAYER_4_ARN}"
+  fi
 }
+
+# publish_function(){
+#   echo "Deploying the code for ${1}"
+#   # cd "${1}"
+#   zip -r code.zip .
+#   aws lambda update-function-code --function-name "${1}" --zip-file fileb://code.zip
+#   rm code.zip
+#   # cd ..
+# }
 
 update_function_layers(){
   echo "Adding pip layer and custom layers to ${1}"
@@ -126,12 +160,17 @@ deploy_lambda_function(){
   configure_aws_credentials
   publish_pip_layer
   publish_custom_layers
+  publish_public_layers
 
   functionNames=(${INPUT_LAMBDA_FUNCTION_NAMES//,/ })
+  zip -r code.zip .
   for name in ${functionNames[@]}; do
-    publish_function $name
+    echo "Deploying the code for ${1}"
+    aws lambda update-function-code --function-name "${1}" --zip-file fileb://code.zip
+    # publish_function $name
     update_function_layers $name
   done
+  rm code.zip
 }
 
 deploy_lambda_function

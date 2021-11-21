@@ -141,14 +141,14 @@ publish_public_layers(){
   fi
 }
 
-publish_function(){
-  echo "Deploying the code for ${1}"
-  # cd "${1}"
-  zip -r code.zip .
-  aws lambda update-function-code --function-name "${1}" --zip-file fileb://code.zip
-  rm code.zip
-  # cd ..
-}
+# publish_function(){
+#   echo "Deploying the code for ${1}"
+#   # cd "${1}"
+#   zip -r code.zip .
+#   aws lambda update-function-code --function-name "${1}" --zip-file fileb://code.zip
+#   rm code.zip
+#   # cd ..
+# }
 
 update_function_layers(){
   echo "Adding pip layer and custom layers to ${1}"
@@ -163,10 +163,14 @@ deploy_lambda_function(){
   publish_public_layers
 
   functionNames=(${INPUT_LAMBDA_FUNCTION_NAMES//,/ })
+  zip -r code.zip .
   for name in ${functionNames[@]}; do
-    publish_function $name
+    echo "Deploying the code for ${1}"
+    aws lambda update-function-code --function-name "${1}" --zip-file fileb://code.zip
+    # publish_function $name
     update_function_layers $name
   done
+  rm code.zip
 }
 
 deploy_lambda_function

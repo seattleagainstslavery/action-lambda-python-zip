@@ -143,11 +143,11 @@ publish_public_layers(){
 
 publish_function(){
   echo "Deploying the code for ${1}"
-  cd "${1}"
+  # cd "${1}"
   zip -r code.zip .
   aws lambda update-function-code --function-name "${1}" --zip-file fileb://code.zip
   rm code.zip
-  cd ..
+  # cd ..
 }
 
 update_function_layers(){

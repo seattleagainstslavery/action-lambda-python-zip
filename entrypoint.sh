@@ -114,6 +114,27 @@ publish_public_layers(){
     echo "Publishing public layer 1"
     ALL_LAYERS_ARN_VERSION+=" ${INPUT_PUBLIC_LAYER_1_ARN}"
   fi
+
+  if [ -z ${INPUT_PUBLIC_LAYER_2_ARN} ]; then
+    echo "public_layer_1_arn is not set"
+  else
+    echo "Publishing public layer 1"
+    ALL_LAYERS_ARN_VERSION+=" ${INPUT_PUBLIC_LAYER_2_ARN}"
+  fi
+
+  if [ -z ${INPUT_PUBLIC_LAYER_3_ARN} ]; then
+    echo "public_layer_1_arn is not set"
+  else
+    echo "Publishing public layer 1"
+    ALL_LAYERS_ARN_VERSION+=" ${INPUT_PUBLIC_LAYER_3_ARN}"
+  fi
+
+  if [ -z ${INPUT_PUBLIC_LAYER_4_ARN} ]; then
+    echo "public_layer_1_arn is not set"
+  else
+    echo "Publishing public layer 1"
+    ALL_LAYERS_ARN_VERSION+=" ${INPUT_PUBLIC_LAYER_4_ARN}"
+  fi
 }
 
 publish_function(){

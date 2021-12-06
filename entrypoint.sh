@@ -130,6 +130,7 @@ deploy_lambda_function(){
   functionNames=(${INPUT_LAMBDA_FUNCTION_NAMES//,/ })
   for name in ${functionNames[@]}; do
     publish_function $name
+    sleep 30
     update_function_layers $name
   done
 }
